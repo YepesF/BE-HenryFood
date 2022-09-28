@@ -19,7 +19,10 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 const server = require("./src/app.js");
+require('dotenv').config();
+const { PORT } = process.env;
 const { conn, Recipe, Diet } = require("./src/db.js");
+
 
 const firtsDiets = [
   "Gluten Free",
@@ -37,7 +40,7 @@ const firtsDiets = [
 
 // Syncing all the models at once.
 conn.sync({ alter: true }).then(() => {
-  server.listen(3001, async () => {
+  server.listen(PORT || 3001 , async () => {
     firtsDiets.forEach((diet) => {
       Diet.findOrCreate({
         where: { name: diet.toLocaleLowerCase() },
